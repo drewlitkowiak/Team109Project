@@ -12,3 +12,9 @@ In order to activate the virtual environment.
 You can then install all required packages in requirements.txt using the following command:
 
 `pip install -r requirements.txt`
+
+
+If you ever add more pip packages at any point, please update requirements.txt with the follwing:
+
+`pip freeze > requirements.txt`
+
