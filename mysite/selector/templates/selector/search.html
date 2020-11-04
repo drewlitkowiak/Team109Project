@@ -1,6 +1,10 @@
 {% extends "selector/base.html" %}
 {% block content %}
-
-    <h1>Search for food items</h1>
+    <form method = "post">
+        <h1>Search for food items</h1>
+        {% csrf_token %}
+        {{foodpriceform}}
+        <button type = "submit">Submit</button>  
+    </form>
     
 {% endblock content %}
