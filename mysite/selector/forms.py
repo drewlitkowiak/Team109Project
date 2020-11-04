@@ -9,8 +9,8 @@ class DeleteFoodForm(forms.Form):
 
 class InsertRestaurantForm(forms.Form):
     restaurantName = forms.CharField(label = 'Restaurant Name')
-    restarantAddress = forms.CharField(label = 'Restaurant Address') 
-    restaurantNameZip = forms.IntegerField(label = 'Restaurant Zip')
+    restaurantAddress = forms.CharField(label = 'Restaurant Address') 
+    restaurantZip = forms.IntegerField(label = 'Restaurant Zip')
 
 class FoodPriceSelectorForm(forms.Form):
     foodName = forms.CharField(label = 'Food Name')

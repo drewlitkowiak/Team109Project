@@ -1,10 +1,22 @@
 {% extends "selector/base.html" %}
 {% block content %}
+    <form method = "post">
+        <h1>Update Food Price</h1>
+        {% csrf_token %}
+        {{upfoodform}}  
+        <button type = "submit" name = "update">Update</button>     
+    </form>
+    <form method = "post">
+        <h1>Delete Food Item</h1>
+        {% csrf_token %}
+        {{delfoodform}}
+        <button type = "submit" name = "delete">Delete</button>  
+    </form>
+    <form method = "post">
+        <h1>Insert Restaurant</h1>
+        {% csrf_token %}
+        {{inrestform}} 
+        <button type = "submit" name = "insert">Insert</button>  
+    </form>
 
-    <h1>Update Food Price</h1>
-    {{upfoodform}}
-    <h1>Delete Food Item</h1>
-    {{delfoodform}}
-    <h1>Insert Restaurant</h1>
-    {{inrestform}}
 {% endblock content %}
