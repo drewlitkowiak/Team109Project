@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Users(models.Model):
     userID = models.BigAutoField(primary_key = True)
     userName = models.CharField(max_length=255)
@@ -11,7 +13,8 @@ class Users(models.Model):
         db_table = 'Users'
 
     def __str__(self):
-        return str(self.userID) + '|' + self.userName
+        return str(self.userID) + '|' + str(self.userName)
+
 
 class Restaurants(models.Model):
     restaurantId = models.BigAutoField(primary_key=True)
@@ -24,6 +27,7 @@ class Restaurants(models.Model):
 
     def __str__(self):
         return self.restaurantName
+
 
 class Ratings(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
