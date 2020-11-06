@@ -16,7 +16,8 @@ def search(request):
                         where foodName = {food_name} and restaurantName = {restaurant_name} and restaurantAddress = {restaurant_address}
                     '''.format(food_name=food_name, restaurant_name=restaurant_name, restaurant_address=restaurant_address)
             res = FoodItems.objects.raw(query)
-            return render(request, 'selector/search_results.html', res)
+            context = {'res': res}
+            return render(request, 'selector/search_results.html', context)
             print(food_name, restaurant_name, restaurant_address) #debug statement, just prints out the input in the terminal
             #this should probbaly redirect to a page do display the result of the search
 
