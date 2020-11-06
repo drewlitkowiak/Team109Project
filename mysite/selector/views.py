@@ -11,10 +11,15 @@ def search(request):
             food_name =  foodpriceform.cleaned_data['foodName']
             restaurant_name = foodpriceform.cleaned_data['restaurantName']
             restaurant_address = foodpriceform.cleaned_data['restaurantAddress']
+            restaurant_id = Restaurants.objects.get(restaurantName=str(restaurant_name), restaurant_address=str(restaurant_address))
+#             query = '''select foodName, price
+#                         from FoodItems
+#                         where foodName = '{food_name}' and restaurantId = (select restaurantId from Restaurants where restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}')
+#                     '''.format(food_name=food_name, restaurant_name=restaurant_name, restaurant_address=restaurant_address)
             query = '''select foodName, price
                         from FoodItems
-                        where foodName = '{food_name}' and restaurantId = (select restaurantId from Restaurants where restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}')
-                    '''.format(food_name=food_name, restaurant_name=restaurant_name, restaurant_address=restaurant_address)
+                        where foodName = '{food_name}' and restaurantId = {restaurant_id}
+                    '''.format(food_name=food_name, restaurant_id=restaurant_id)
             res = FoodItems.objects.raw(query)
             context = {'res': res}
             return render(request, 'selector/search_results.html', context)
