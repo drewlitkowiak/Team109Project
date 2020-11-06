@@ -11,11 +11,12 @@ def search(request):
             food_name =  foodpriceform.cleaned_data['foodName']
             restaurant_name = foodpriceform.cleaned_data['restaurantName']
             restaurant_address = foodpriceform.cleaned_data['restaurantAddress']
-            query = '''select R.restaurantId AS id, F.foodName, F.price
-                        from FoodItems AS F NATURAL JOIN Restaurants AS R
-                        where foodName = '{food_name}' and restaurantId IN (select restaurantId from Restaurants where restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}')
-                    '''.format(food_name=food_name, restaurant_name=restaurant_name, restaurant_address=restaurant_address)
+            query = '''SELECT *
+                         FROM FoodItems AS F NATURAL JOIN Restaurants AS R
+                         WHERE foodName = '{food_name}' and restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}'
+                     '''.format(food_name=food_name, restaurant_name=restaurant_name, restaurant_address=restaurant_address)
             res = FoodItems.objects.raw(query)
+
             context = {'res': res}
             return render(request, 'selector/search_results.html', context)
             print(food_name, restaurant_name, restaurant_address) #debug statement, just prints out the input in the terminal
@@ -32,14 +33,14 @@ def edit(request):
                 food_name = updatefoodform.cleaned_data['foodName']
                 vegetarian = updatefoodform.cleaned_data['vegetarianStatus']
                 with connection.cursor() as cursor:
-                    cursor.execute("update FoodItems set price = price + 1 where foodName = {food_name} and vegetarian = {vegetarian}".format(food_name=food_name, vegetarian=vegetarian))
+                    cursor.execute("update FoodItems set price = price + 1 where foodName = '{food_name}' and vegetarian = '{vegetarian}'".format(food_name=food_name, vegetarian=vegetarian))
                 print(food_name, vegetarian)
         elif "delete" in request.POST:
             deletefoodform = DeleteFoodForm(request.POST)
             if deletefoodform.is_valid():
                 food_name = deletefoodform.cleaned_data['foodName']
                 with connection.cursor() as cursor:
-                    cursor.execute("delete from FoodItems where foodName = {food_name}".format(food_name=food_name))
+                    cursor.execute("delete from FoodItems where foodName = '{food_name}'".format(food_name=food_name))
                 print(food_name)
         elif "insert" in request.POST:
             insertrestaurantform = InsertRestaurantForm(request.POST)
@@ -49,7 +50,7 @@ def edit(request):
                 restaurant_zip = insertrestaurantform.cleaned_data['restaurantZip']
                 with connection.cursor() as cursor:
                     cursor.execute('''insert into Restaurants(restaurantName, restaurantAddress, restaurantZip) 
-                                      values ({restaurant_name}, {restaurant_address}, {restaurant_zip})'''.format(restaurant_name=restaurant_name, restaurant_address=restaurant_address, restaurant_zip=restaurant_zip))
+                                      values ('{restaurant_name}', '{restaurant_address}', '{restaurant_zip}')'''.format(restaurant_name=restaurant_name, restaurant_address=restaurant_address, restaurant_zip=restaurant_zip))
                 print(restaurant_name, restaurant_address, restaurant_zip)
     
     upfoodform = UpdateFoodForm()
