@@ -13,7 +13,7 @@ def search(request):
             restaurant_address = foodpriceform.cleaned_data['restaurantAddress']
             query = '''select foodName, price
                         from FoodItems
-                        where foodName = {food_name} and restaurantName = {restaurant_name} and restaurantAddress = {restaurant_address}
+                        where foodName = '{food_name}' and restaurantId = (select restaurantId from Restaurants where restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}')
                     '''.format(food_name=food_name, restaurant_name=restaurant_name, restaurant_address=restaurant_address)
             res = FoodItems.objects.raw(query)
             context = {'res': res}
