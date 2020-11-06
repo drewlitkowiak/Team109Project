@@ -2,7 +2,7 @@ from django import forms
 
 class UpdateFoodForm(forms.Form):
     foodName = forms.CharField(label = 'Food Name')
-    vegetarianStatus = forms.ChoiceField(label = 'Vegetarian Status', choices =[('vegetarian', 'Vegetarian'), ('vegan', 'Vegan'), ('none', 'None')])
+    vegetarianStatus = forms.ChoiceField(label = 'Vegetarian Status', choices =[('Vegetarian', 'Vegetarian'), ('Vegan', 'Vegan'), ('No', 'No')])
 
 class DeleteFoodForm(forms.Form):
     foodName = forms.CharField(label = 'Food Name')
