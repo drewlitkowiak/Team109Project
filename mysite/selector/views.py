@@ -27,8 +27,8 @@ def search(request):
 
 def edit(request):
     if request.method == 'POST':
-        if "update" in request.POST:                        # handles multiple forms on one page, each submit button has a different label
-            updatefoodform = UpdateFoodForm(request.POST)   # so by checking the label, wedecide which form to process
+        if "update" in request.POST:                        # Need to fix this for the new forms 
+            updatefoodform = UpdateFoodForm(request.POST)   # 
             if updatefoodform.is_valid():
                 food_name = updatefoodform.cleaned_data['foodName']
                 vegetarian = updatefoodform.cleaned_data['vegetarianStatus']
@@ -55,5 +55,8 @@ def edit(request):
     
     upfoodform = UpdateFoodForm()
     delfoodform = DeleteFoodForm()
+    infoodform = InsertFoodForm()
     inrestform = InsertRestaurantForm()
+    delrestform = DeleteRestaurantForm()
+    inratform = InsertRatingsForm()
     return render(request, 'selector/edit.html', {'upfoodform': upfoodform, 'delfoodform': delfoodform, 'inrestform': inrestform})
