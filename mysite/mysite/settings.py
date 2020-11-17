@@ -105,6 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+config.DATABASE_URL = os.environ["NEO4J_BOLT_URL"]
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
