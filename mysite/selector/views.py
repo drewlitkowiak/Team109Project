@@ -155,12 +155,46 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
     upprefform = UpdatePrefForm()
     return render(request, 'selector/prefs.html', {'upprefform': upprefform})
 
-def rec(request):       # form for the recommender, needs to connect to Neo4j and sql db's
+def rec(request):       # form for the recommender, advanced function goes here as well, needs to connect to Neo4j and sql db's
     if request.method == 'POST':
         recomenderform = RecomenderForm(request.POST)
         if recomenderform.is_valid:
             email = recomenderform.cleaned_data['email']
             weather = recomenderform.cleaned_data['weather']
+            lowerprice = recomenderform.cleaned_data['lowerprice']
+            upperprice = recomenderform.cleaned_data['upperprice']
+            cuisine = recomenderform.cleaned_data['cuisine']
+            vegetarian = recomenderform.cleaned_data['vegetarianStatus']
+            allergy1 = recomenderform.cleaned_data['allergies1']
+            allergy2 = recomenderform.cleaned_data['allergies2']
+            query1 = '''SELECT *
+                         FROM Users
+                         WHERE userEmail = '{email}'
+                     '''.format(email = email)
+            res = Users.objects.raw(query1)
+            userZip = 0 
+            for p in res:
+                userZip = p.userZip  # gets the user's zip code for location related stuff
+            query2 = '''SELECT *
+                        FROM Restaurants
+                     '''
+            resrestids = Restaurants.objects.raw(query2)
+            metric = []              # a list (array) of dictionaries that will be edited with the metrics of each restaurant
+            for p in resrestids:
+                toadd = {p.restaurantID: 0}
+                metric.append(toadd)
+
+            queryprice = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
+                            FROM FoodItems AS F NATURAL JOIN Restaurants AS R
+                            WHERE price <= '{upperprice}' and price >= '{lowerprice}'
+                            GROUP BY R.restaurantID
+                            ORDER BY count(F.foodID) desc
+                        '''.format(upperprice = upperprice, lowerprice = lowerprice)
+            priceres = FoodItems.objects.raw(queryprice)
+            priceList = []    
+            for p in priceres:
+                newtup = (p.restaurantId, p.foodCount)
+                priceList.append(newtup)
             # now need to conenct to DB's to query
 
     recform = RecomenderForm()

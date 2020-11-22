@@ -52,3 +52,9 @@ class UpdatePrefForm(forms.Form):
 class RecomenderForm(forms.Form):
     email = forms.EmailField(label = 'Email')
     weather = forms.ChoiceField(label = 'Weather', choices=[('Good', 'Good'), ('Poor', 'Poor')])
+    lowerprice = forms.FloatField(label = 'Lower Price')
+    upperprice = forms.FloatField(label = 'Upper Price')
+    cuisine = forms.ChoiceField(label = 'Cuisine', choices =[('American', 'American'), ('Mexican', 'Mexican'), ('Asian', 'Asian')])
+    vegetarianStatus = forms.ChoiceField(label = 'Vegetarian Status', choices =[('Vegetarian', 'Vegetarian'), ('Vegan', 'Vegan'), ('No', 'No')])
+    allergies1 = forms.ChoiceField(label = 'Allergies 1', choices =[('Dairy', 'Dairy'), ('Gluten', 'Gluten'), ('Seafood', 'Seafood'), ('No', 'No')])
+    allerfies2 = forms.ChoiceField(label = 'Allergies 2', choices =[('Dairy', 'Dairy'), ('Gluten', 'Gluten'), ('Seafood', 'Seafood'), ('No', 'No')])
