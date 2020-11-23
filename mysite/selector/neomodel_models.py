@@ -22,9 +22,9 @@ class NeoUser(StructuredNode):
     likedFoods = RelationshipTo(NeoFoodItems, 'LIKES')
     mostFrequents = RelationshipTo(NeoRestaurant, 'MOST_FREQUENTS')
 
-    mostImportant = RelationshipTo(NeoAttribute, 'MOST_IMPORTANT')
-    secondImportant = RelationshipTo(NeoAttribute, 'SECOND_IMPORTANT')
-    thirdImportant = RelationshipTo(NeoAttribute, 'THIRD_IMPORTANT')
-    fourthImportant = RelationshipTo(NeoAttribute, 'FOURTH_IMPORTANT')
-    fifthImportant = RelationshipTo(NeoAttribute, 'FIFTH_IMPORTANT')
+    mostImportant = RelationshipTo(NeoAttributes, 'MOST_IMPORTANT')
+    secondImportant = RelationshipTo(NeoAttributes, 'SECOND_IMPORTANT')
+    thirdImportant = RelationshipTo(NeoAttributes, 'THIRD_IMPORTANT')
+    fourthImportant = RelationshipTo(NeoAttributes, 'FOURTH_IMPORTANT')
+    fifthImportant = RelationshipTo(NeoAttributes, 'FIFTH_IMPORTANT')
 
