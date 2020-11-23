@@ -47,7 +47,7 @@ class UpdatePrefForm(forms.Form):
     fifthImportant = forms.ChoiceField(label = 'Fifth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familair', 'Something Familiar')])
     sixthImportant = forms.ChoiceField(label = 'Sixth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familair', 'Something Familiar')])
     favoriteRestaurant = forms.CharField(label = 'Favorite Restaurant')
-    likedFood = forms.Charfield(label = 'Liked Food')
+    likedFood = forms.CharField(label = 'Liked Food')
 
 class RecomenderForm(forms.Form):
     email = forms.EmailField(label = 'Email')

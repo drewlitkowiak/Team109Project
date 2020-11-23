@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .forms import UpdateFoodForm, DeleteFoodForm, InsertRestaurantForm, FoodPriceSelectorForm, InsertFoodForm, DeleteRestaurantForm, InsertRatingsForm, UpdatePrefForm, RecomenderForm
 from .models import Users, Restaurants, FoodItems, Ratings, NeoUser, Attribute, NeoFoodItem, NeoRestaurant
+from .neomodel_models import FoodItems, Attributes, Restaurant, User
 from django.db import connection
 # Create your views here.
 
@@ -140,7 +141,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
     if request.method == 'POST':
         updateprefform = UpdatePrefForm(request.POST)
         if updateprefform.is_valid:
-            email = updateprefform.cleaned_data['email']
+            email1 = updateprefform.cleaned_data['email']
             attr1 = updateprefform.cleaned_data['mostImportant']
             attr2 = updateprefform.cleaned_data['secondmportant']
             attr3 = updateprefform.cleaned_data['thirdImportant']
@@ -149,7 +150,9 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             attr6 = updateprefform.cleaned_data['sixthImportant']
             fav_rest = updateprefform.cleaned_data['favoriteRestaurant']
             liked_food = updateprefform.cleaned_data['likedFood']
-            print(email, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
+            print(email1, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
+            testUser = NeoUser(email = email1).save
+            
     # need to hook up Neo4j and do then insert this data
 
     upprefform = UpdatePrefForm()
