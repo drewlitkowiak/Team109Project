@@ -139,7 +139,7 @@ def edit(request):
 def prefs(request):     # made a new page and view fucntion for updating the Neo4J db, 
     if request.method == 'POST':
         updateprefform = UpdatePrefForm(request.POST)
-        if updateprefform.is_valid:
+        if updateprefform.is_valid():
             email1 = updateprefform.cleaned_data['email']
             attr1 = updateprefform.cleaned_data['mostImportant']
             attr2 = updateprefform.cleaned_data['secondmportant']
