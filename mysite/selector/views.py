@@ -59,9 +59,8 @@ def edit(request):
                             WHERE restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}'
                         '''.format( restaurant_name=rest_name, restaurant_address=rest_addr)            # the foreign key column in food items is restuarnt ID, so we need to query the restaurant table for the restaurnat ID based on the rest_name and rest_addr
                 res = Restaurants.objects.raw(query)
-                rest_id = 0
-                for q in res:
-                    rest_id = q.restaurantId  # res should only return one row, so this for loop will only run once and rest_id will be the id of the restaurant with the address and name 
+                rest_id = res[0].restaurantId
+                # res should only return one row, so this for loop will only run once and rest_id will be the id of the restaurant with the address and name 
                 
                 print(cuisine, rest_id, food_name, vegetarian, allergy_1, allergy_2, price) # another debug statment
 
@@ -152,6 +151,8 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             liked_food = updateprefform.cleaned_data['likedFood']
             print(email1, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
             testUser = NeoUser(email = email1).save
+            pulledUser = NeoUser.nodes.get(email = email1)
+            print(pulledUser.email)
             
     # need to hook up Neo4j and do then insert this data
 
