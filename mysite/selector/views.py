@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import UpdateFoodForm, DeleteFoodForm, InsertRestaurantForm, FoodPriceSelectorForm, InsertFoodForm, DeleteRestaurantForm, InsertRatingsForm, UpdatePrefForm, RecomenderForm
 from .models import Users, Restaurants, FoodItems, Ratings
-from .neomodel_models import FoodItems, Attributes, Restaurant, User
+from .neomodel_models import NeoFoodItems, NeoAttributes, NeoRestaurant, NeoUser
 from django.db import connection
 # Create your views here.
 
