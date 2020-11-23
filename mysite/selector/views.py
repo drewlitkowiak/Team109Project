@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import UpdateFoodForm, DeleteFoodForm, InsertRestaurantForm, FoodPriceSelectorForm, InsertFoodForm, DeleteRestaurantForm, InsertRatingsForm, UpdatePrefForm, RecomenderForm
-from .models import Users, Restaurants, FoodItems, Ratings
+from .models import Users, Restaurants, FoodItems, Ratings, NeoUser, Attribute, NeoFoodItem, NeoRestaurant
 from django.db import connection
 # Create your views here.
 
@@ -62,7 +62,7 @@ def edit(request):
                 for q in res:
                     rest_id = q.restaurantId  # res should only return one row, so this for loop will only run once and rest_id will be the id of the restaurant with the address and name 
                 
-                print(cuisine, rest_id, food_name, vegetarian, allergy1, allergy2, price) # another debug statment
+                print(cuisine, rest_id, food_name, vegetarian, allergy_1, allergy_2, price) # another debug statment
 
                 if allergy_1 != 'No' and allergy_2 != 'No' :
                     with connection.cursor() as cursor:                 # we have a bunch of if, elif statements here because allerigeis are optional fields, so they just cover the cases where both fields are filled, one of them is filled and both are empty
@@ -106,20 +106,19 @@ def edit(request):
                 rest_name = insertratform.cleaned_data['restaurantName']
                 rest_addr = insertratform.cleaned_data['restaurantAddress']
                 rating = insertratform.cleaned_data['rating']
-                query = '''SELECT *                                          
+                query1 = '''SELECT *                                          
                             FROM Restaurants
                             WHERE restaurantName = '{restaurant_name}' and restaurantAddress = '{restaurant_address}'
                         '''.format( restaurant_name=rest_name, restaurant_address=rest_addr)   # we need both userID and the restaurantID to make the insertion, so we need to query for those 
-                res = Restaurants.objects.raw(query)
-                rest_id = 0
-                for q in res:
-                    rest_id = q.restaurantId
+                res = Restaurants.objects.raw(query1)
+                rest_id = res[0].restaurantId
+                
 
-                query = '''SELECT *                                          
+                query2 = '''SELECT *                                          
                             FROM Users
                             WHERE userEmail = '{user_email}'
                         '''.format(user_email=user_email)       # querying for userID using the email and putting the Id into user_id
-                use = Users.objects.raw(query)
+                use = Users.objects.raw(query2)
                 user_id = 0
                 for p in use:
                     user_id = p.userID
@@ -150,6 +149,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             attr6 = updateprefform.cleaned_data['sixthImportant']
             fav_rest = updateprefform.cleaned_data['favoriteRestaurant']
             liked_food = updateprefform.cleaned_data['likedFood']
+            print(email, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
     # need to hook up Neo4j and do then insert this data
 
     upprefform = UpdatePrefForm()
