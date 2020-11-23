@@ -142,7 +142,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
         if updateprefform.is_valid():
             email1 = updateprefform.cleaned_data['email']
             attr1 = updateprefform.cleaned_data['mostImportant']
-            attr2 = updateprefform.cleaned_data['secondmportant']
+            attr2 = updateprefform.cleaned_data['secondImportant']
             attr3 = updateprefform.cleaned_data['thirdImportant']
             attr4 = updateprefform.cleaned_data['fourthImportant']
             attr5 = updateprefform.cleaned_data['fifthImportant']
@@ -150,7 +150,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             fav_rest = updateprefform.cleaned_data['favoriteRestaurant']
             liked_food = updateprefform.cleaned_data['likedFood']
             print(email1, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
-            testUser = NeoUser(email = email1).save
+            testUser = NeoUser(email = email1).save()
             pulledUser = NeoUser.nodes.get(email = email1)
             print(pulledUser.email)
             

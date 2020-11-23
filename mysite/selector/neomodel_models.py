@@ -16,7 +16,7 @@ class NeoRestaurant(StructuredNode):
     name = StringProperty(required=True)
 
 class NeoUser(StructuredNode):
-    name = StringProperty(required=True)
+    email = StringProperty(required=True)
     uid = UniqueIdProperty()
 
     likedFoods = RelationshipTo(NeoFoodItems, 'LIKES')
