@@ -4,19 +4,37 @@
         <h1>Update Food Price</h1>
         {% csrf_token %}
         {{upfoodform}}  
-        <button type = "submit" name = "update">Update</button>     
+        <button type = "submit" name = "updatefood">UpdateFood</button>     
     </form>
     <form method = "post">
         <h1>Delete Food Item</h1>
         {% csrf_token %}
         {{delfoodform}}
-        <button type = "submit" name = "delete">Delete</button>  
+        <button type = "submit" name = "deletefood">DeleteFood</button>  
+    </form>
+    <form method = "post">
+        <h1>Insert Food Item</h1>
+        {% csrf_token %}
+        {{infoodform}}
+        <button type = "submit" name = "insertfood">InsertFood</button>  
     </form>
     <form method = "post">
         <h1>Insert Restaurant</h1>
         {% csrf_token %}
         {{inrestform}} 
-        <button type = "submit" name = "insert">Insert</button>  
+        <button type = "submit" name = "insertrest">InsertRestaurant</button>  
+    </form>
+    <form method = "post">
+        <h1>Delete Restaurant</h1>
+        {% csrf_token %}
+        {{delrestform}}
+        <button type = "submit" name = "deleterest">DeleteRestaurant</button>  
+    </form>
+    <form method = "post">
+        <h1>Insert Ratings</h1>
+        {% csrf_token %}
+        {{inratform}}
+        <button type = "submit" name = "insertrat">InsertRating</button>  
     </form>
 
 {% endblock content %}

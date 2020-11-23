@@ -1,0 +1,10 @@
+{% extends "selector/base.html" %}
+{% block content %}
+    <form method = "post">
+        <h1>Create/Update User Preferences</h1>
+        {% csrf_token %}
+        {{upprefform}}
+        <button type = "submit">Submit</button>  
+    </form>
+    
+{% endblock content %}
