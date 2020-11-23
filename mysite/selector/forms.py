@@ -15,7 +15,7 @@ class InsertFoodForm(forms.Form):
     cuisine = forms.ChoiceField(label = 'Cuisine', choices =[('American', 'American'), ('Mexican', 'Mexican'), ('Asian', 'Asian')])
     vegetarianStatus = forms.ChoiceField(label = 'Vegetarian Status', choices =[('Vegetarian', 'Vegetarian'), ('Vegan', 'Vegan'), ('No', 'No')])
     allergies1 = forms.ChoiceField(label = 'Allergies 1', choices =[('Dairy', 'Dairy'), ('Gluten', 'Gluten'), ('Seafood', 'Seafood'), ('No', 'No')])
-    allerfies2 = forms.ChoiceField(label = 'Allergies 2', choices =[('Dairy', 'Dairy'), ('Gluten', 'Gluten'), ('Seafood', 'Seafood'), ('No', 'No')])
+    allergies2 = forms.ChoiceField(label = 'Allergies 2', choices =[('Dairy', 'Dairy'), ('Gluten', 'Gluten'), ('Seafood', 'Seafood'), ('No', 'No')])
     price = forms.FloatField(label = 'Price')
 
 class InsertRestaurantForm(forms.Form):
@@ -47,7 +47,7 @@ class UpdatePrefForm(forms.Form):
     fifthImportant = forms.ChoiceField(label = 'Fifth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familair', 'Something Familiar')])
     sixthImportant = forms.ChoiceField(label = 'Sixth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familair', 'Something Familiar')])
     favoriteRestaurant = forms.CharField(label = 'Favorite Restaurant')
-    likedFood = forms.Charfield(label = 'Liked Food')
+    likedFood = forms.CharField(label = 'Liked Food')
 
 class RecomenderForm(forms.Form):
     email = forms.EmailField(label = 'Email')

@@ -1,6 +1,5 @@
 from django.db import models
-from neomodel import (config, StructuredNode, StringProperty, IntegerProperty, EmailProperty
-    UniqueIdProperty, RelationshipTo)
+from neomodel import (config, StructuredNode, StringProperty, IntegerProperty, EmailProperty, UniqueIdProperty, RelationshipTo)
 # Create your models here.
 
 
@@ -53,7 +52,7 @@ class FoodItems(models.Model):
         db_table = 'FoodItems'
 
 # neo4j nodes defined below here
-
+'''
 class NeoUser(StructuredNode):
     uid = UniqueIdProperty()
     email = EmailProperty(required = True)
@@ -74,3 +73,4 @@ class NeoFoodItem(StructuredNode):
 
 class NeoRestaurant(StructuredNode):
     restName = StringProperty(required = True)
+'''

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import UpdateFoodForm, DeleteFoodForm, InsertRestaurantForm, FoodPriceSelectorForm, InsertFoodForm, DeleteRestaurantForm, InsertRatingsForm, UpdatePrefForm, RecomenderForm
-from .models import Users, Restaurants, FoodItems, Ratings, NeoUser, Attribute, NeoFoodItem, NeoRestaurant
+from .models import Users, Restaurants, FoodItems, Ratings
 from django.db import connection
 # Create your views here.
 
