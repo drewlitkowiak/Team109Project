@@ -52,23 +52,25 @@ class FoodItems(models.Model):
         db_table = 'FoodItems'
 
 # neo4j nodes defined below here
+'''
+class NeoUser(StructuredNode):
+    uid = UniqueIdProperty()
+    email = EmailProperty(required = True)
+    important1 = RelationshipTo('Attribute', 'Most_Important')
+    important2 = RelationshipTo('Attribute', 'Second_Important')
+    important3 = RelationshipTo('Attribute', 'Third_Important')
+    important4 = RelationshipTo('Attribute', 'Fourth_Important')
+    important5 = RelationshipTo('Attribute', 'Fifth_Important')
+    important6 = RelationshipTo('Attribute', 'Sixth_Important')
+    favrest = RelationshipTo('NeoRestaurant', 'Favorite_Restaurant')
+    likedfood = RelationshipTo('NeoFoodItem', 'Liked_Food_Item')
+    
+class Attribute(StructuredNode):
+    attrName =  StringProperty(required = True)
 
-#class NeoUser(StructuredNode):
-    #uid = UniqueIdProperty()
-    #email = EmailProperty(required = True)
-    #important1 = RelationshipTo('Attribute', 'Most_Important')
-    #important2 = RelationshipTo('Attribute', 'Second_Important')
-    #important3 = RelationshipTo('Attribute', 'Third_Important')
-    #important4 = RelationshipTo('Attribute', 'Fourth_Important')
-    #important5 = RelationshipTo('Attribute', 'Fifth_Important')
-    #important6 = RelationshipTo('Attribute', 'Sixth_Important')
-    #favrest = RelationshipTo('NeoRestaurant', 'Favorite_Restaurant')
-    #likedfood = RelationshipTo('NeoFoodItem', 'Liked_Food_Item')
-#class Attribute(StructuredNode):
-    #attrName =  StringProperty(required = True)
+class NeoFoodItem(StructuredNode):
+    foodName = StringProperty(required = True)
 
-#class NeoFoodItem(StructuredNode):
-    #foodName = StringProperty(required = True)
-
-#class NeoRestaurant(StructuredNode):
-    #restName = StringProperty(required = True)
+class NeoRestaurant(StructuredNode):
+    restName = StringProperty(required = True)
+'''

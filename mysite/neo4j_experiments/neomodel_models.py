@@ -22,9 +22,9 @@ class User(StructuredNode):
     likedFoods = RelationshipTo(FoodItems, 'LIKES')
     mostFrequents = RelationshipTo(Restaurant, 'MOST_FREQUENTS')
 
-    mostImportant = RelationshipTo(Attribute, 'MOST_IMPORTANT')
-    secondImportant = RelationshipTo(Attribute, 'SECOND_IMPORTANT')
-    thirdImportant = RelationshipTo(Attribute, 'THIRD_IMPORTANT')
-    fourthImportant = RelationshipTo(Attribute, 'FOURTH_IMPORTANT')
-    fifthImportant = RelationshipTo(Attribute, 'FIFTH_IMPORTANT')
+    mostImportant = RelationshipTo(Attributes, 'MOST_IMPORTANT')
+    secondImportant = RelationshipTo(Attributes, 'SECOND_IMPORTANT')
+    thirdImportant = RelationshipTo(Attributes, 'THIRD_IMPORTANT')
+    fourthImportant = RelationshipTo(Attributes, 'FOURTH_IMPORTANT')
+    fifthImportant = RelationshipTo(Attributes, 'FIFTH_IMPORTANT')
 
