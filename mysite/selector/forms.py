@@ -40,12 +40,11 @@ class FoodPriceSelectorForm(forms.Form):
 
 class UpdatePrefForm(forms.Form):
     email = forms.EmailField(label = 'Email')
-    mostImportant = forms.ChoiceField(label = 'First Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familiar', 'Something Familiar')])
-    secondImportant = forms.ChoiceField(label = 'Second Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familiar', 'Something Familiar')])
-    thirdImportant = forms.ChoiceField(label = 'Third Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familiar', 'Something Familiar')])
-    fourthImportant = forms.ChoiceField(label = 'Fourth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familiar', 'Something Familiar')])
-    fifthImportant = forms.ChoiceField(label = 'Fifth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familiar', 'Something Familiar')])
-    sixthImportant = forms.ChoiceField(label = 'Sixth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian Status', 'Vegetarian Status'), ('Allergies', 'Allergies'), ('Something Familiar', 'Something Familiar')])
+    mostImportant = forms.ChoiceField(label = 'First Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian / Allergies', 'Vegetarian / Allergies'), ('Something Familiar', 'Something Familiar')])
+    secondImportant = forms.ChoiceField(label = 'Second Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian / Allergies', 'Vegetarian / Allergies'),('Something Familiar', 'Something Familiar')])
+    thirdImportant = forms.ChoiceField(label = 'Third Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian / Allergies', 'Vegetarian / Allergies'), ('Something Familiar', 'Something Familiar')])
+    fourthImportant = forms.ChoiceField(label = 'Fourth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian / Allergies', 'Vegetarian / Allergies'),('Something Familiar', 'Something Familiar')])
+    fifthImportant = forms.ChoiceField(label = 'Fifth Most Important Attribute', choices = [('Price', 'Price'), ('Location', 'Location'), ('Cuisine', 'Cuisine'), ('Vegetarian / Allergies', 'Vegetarian / Allergies'), ('Something Familiar', 'Something Familiar')])
     favoriteRestaurant = forms.CharField(label = 'Favorite Restaurant')
     likedFood = forms.CharField(label = 'Liked Food')
 

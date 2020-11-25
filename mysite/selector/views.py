@@ -146,7 +146,6 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             attr3 = updateprefform.cleaned_data['thirdImportant']
             attr4 = updateprefform.cleaned_data['fourthImportant']
             attr5 = updateprefform.cleaned_data['fifthImportant']
-            attr6 = updateprefform.cleaned_data['sixthImportant']
             fav_rest = updateprefform.cleaned_data['favoriteRestaurant']
             liked_food = updateprefform.cleaned_data['likedFood']
             print(email1, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
@@ -163,7 +162,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
     if request.method == 'POST':
         recomenderform = RecomenderForm(request.POST)
         if recomenderform.is_valid:
-            email = recomenderform.cleaned_data['email']
+            email1 = recomenderform.cleaned_data['email']
             weather = recomenderform.cleaned_data['weather']
             lowerprice = recomenderform.cleaned_data['lowerprice']
             upperprice = recomenderform.cleaned_data['upperprice']
@@ -171,22 +170,47 @@ def rec(request):       # form for the recommender, advanced function goes here 
             vegetarian = recomenderform.cleaned_data['vegetarianStatus']
             allergy1 = recomenderform.cleaned_data['allergies1']
             allergy2 = recomenderform.cleaned_data['allergies2']
+            
+            indecies = {'Price': 0, 'Location': 1, 'Cuisine': 2, 'Vegetarian / Allergies': 3, 'Something Familiar': 4}
+            weights = [0.0,0.0,0.0,0.0,0.0]
+            user_inNeo = NeoUser.nodes.get_or_none(email = email1)
+            if (user_inNeo == None):
+                return render(request, 'selector/rec.html', {'You do not have any preferences' : recresult}) 
+            most_import = user_inNeo.mostImportant[0]
+            second_import = user_inNeo.secondImportant[0]
+            third_import = user_inNeo.thirdImportant[0]
+            fourth_import = user_inNeo.fourthImportant[0]
+            fifth_import = user_inNeo.fifthImportant[0]
+            frequent_rest = user_inNeo.mostFrequents[0]
+            fav_food = user_inNeo.likedFoods[0]
+
+            most_idx = indecies.get(most_import.attribute)
+            weights[most_idx] = 0.4
+            second_idx = indecies.get(second_import.attribute)
+            weights[second_idx] = 0.275
+            third_idx = indecies.get(third_import.attribute)
+            weights[third_idx] = 0.175
+            fourth_idx = indecies.get(fourth_import.attribute)
+            weights[fourth_idx] = 0.075
+            fifth_idx = indecies.get(fourth_import.attribute)
+            weights[fifth_idx] = 0.075
+            freq_rest_name = frequent_rest.name
+            fav_food_name = fav_food.name
+
             query1 = '''SELECT *
                          FROM Users
                          WHERE userEmail = '{email}'
-                     '''.format(email = email)
+                     '''.format(email = email1)
             res = Users.objects.raw(query1)
-            userZip = 0 
-            for p in res:
-                userZip = p.userZip  # gets the user's zip code for location related stuff
+            userZip = res[0].userZip # gets the user's zip code for location related stuff
             query2 = '''SELECT *
                         FROM Restaurants
                      '''
             resrestids = Restaurants.objects.raw(query2)
-            metric = []              # a list (array) of dictionaries that will be edited with the metrics of each restaurant
+            metric = {}              # a dictionary that will be edited with the metrics of each restaurant
             for p in resrestids:
                 toadd = {p.restaurantID: 0}
-                metric.append(toadd)
+                metric.update(toadd)
 
             queryprice = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
                             FROM FoodItems AS F NATURAL JOIN Restaurants AS R
@@ -194,11 +218,27 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             GROUP BY R.restaurantID
                             ORDER BY count(F.foodID) desc
                         '''.format(upperprice = upperprice, lowerprice = lowerprice)
-            priceres = FoodItems.objects.raw(queryprice)
-            priceList = []    
-            for p in priceres:
-                newtup = (p.restaurantId, p.foodCount)
-                priceList.append(newtup)
+            priceRes = FoodItems.objects.raw(queryprice)
+            total_food = 0   
+            for p in priceRes:
+                total_food = total_food + p.foodCount
+            for p in priceRes:
+                proportion = p.foodCount / total_food
+                proportion = proportion * weights[0]
+                old_metric = metric.get(p.restaurantID)
+                new_metric = proportion + old_metric
+                metric.update({p.restaurantID:new_metric})
+    
+            querylocation = '''SELECT *
+                            FROM Restaurants AS R
+                            WHERE restaurantZip = '{userZip}'
+                        '''.format(userZip = userZip)
+            locationRes = FoodItems.objects.raw(querylocation)
+            for p in locationRes:
+                proportion = 0.3 * weights[1]
+                old_metric = metric.get(p.restaurantID)
+                new_metric = proportion + old_metric
+                metric.update({p.restaurantID:new_metric})
             # now need to conenct to DB's to query
 
     recform = RecomenderForm()
