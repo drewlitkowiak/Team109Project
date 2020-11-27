@@ -193,11 +193,10 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
 
 
 
-
+            #debug statements, should be changed 
             pulledUser = NeoUser.nodes.get(email = email1)
             print(pulledUser.email)
             
-    # need to hook up Neo4j and do then insert this data
 
     upprefform = UpdatePrefForm()
     return render(request, 'selector/prefs.html', {'upprefform': upprefform})
