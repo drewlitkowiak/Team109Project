@@ -149,7 +149,51 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             fav_rest = updateprefform.cleaned_data['favoriteRestaurant']
             liked_food = updateprefform.cleaned_data['likedFood']
             print(email1, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
-            testUser = NeoUser(email = email1).save()
+            # seaches the neo4j database for the user node and the nodes for all the attributes, creates them if they do not exist
+            currUser = NeoUser.nodes.get_or_none(email=email1)
+            if currUser == None:
+                currUser = NeoUser(email = email1).save()
+            attr1Neo = NeoAttributes.get_or_none(attribute=attr1)
+            if attr1Neo == None:
+                attr1Neo = NeoAttributes(attribute = attr1).save
+            attr2Neo = NeoAttributes.get_or_none(attribute=attr2)
+            if attr2Neo == None:
+                attr2Neo = NeoAttributes(attribute = attr2).save
+            attr3Neo = NeoAttributes.get_or_none(attribute=attr3)
+            if attr3Neo == None:
+                attr3Neo = NeoAttributes(attribute = attr3).save
+            attr4Neo = NeoAttributes.get_or_none(attribute=attr4)
+            if attr4Neo == None:
+                attr4Neo = NeoAttributes(attribute = attr4).save
+            attr5Neo = NeoAttributes.get_or_none(attribute=attr5)
+            if attr5Neo == None:
+                attr5Neo = NeoAttributes(attribute = attr5Neo).save
+            fav_restNeo = NeoRestaurant.get_or_none(name = fav_rest)
+            if fav_restNeo == None:
+                fav_restNeo = NeoRestaurant(name = fav_rest).save()
+            liked_foodNeo = NeoFoodItems.get_or_none(name = liked_food)
+            if liked_foodNeo == None:
+                liked_foodNeo = NeoFoodItems(name = liked_food).save()
+            # first disconnect all relationships from the user node.
+            currUser.mostImportant.disconnect_all()
+            currUser.secondImportant.disconnect_all()
+            currUser.thirdImportant.disconnect_all()
+            currUser.fourthImportant.disconnect_all()
+            currUser.fifthImportant.disconnect_all()
+            currUser.likedFoods.disconnect_all()
+            currUser.mostFrequents.disconnect_all()
+            # now we reconnect the user node to the new ones
+            currUser.mostImportant.connect(attr1Neo)
+            currUser.secondImportant.connect(attr2Neo)
+            currUser.thirdImportant.connect(attr3Neo)
+            currUser.fourthImportant.connect(attr4Neo)
+            currUser.fifthImportant.connect(attr5Neo)
+            currUser.likedFoods.connect(liked_foodNeo)
+            currUser.mostFrequents.connect(fav_restNeo)
+
+
+
+
             pulledUser = NeoUser.nodes.get(email = email1)
             print(pulledUser.email)
             
