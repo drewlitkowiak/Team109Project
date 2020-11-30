@@ -263,7 +263,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             GROUP BY R.restaurantId
                             ORDER BY count(F.foodID) desc
                         '''.format(upperprice = upperprice, lowerprice = lowerprice)
-            priceRes = FoodItems.objects.raw(queryprice)
+            priceRes = Restaurants.objects.raw(queryprice)
             total_food = 0   
             for p in priceRes:
                 total_food = total_food + p.foodCount
@@ -279,7 +279,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             FROM Restaurants AS R
                             WHERE restaurantZip = '{userZip}'
                         '''.format(userZip = userZip)
-            locationRes = FoodItems.objects.raw(querylocation)
+            locationRes = Restaurants.objects.raw(querylocation)
             
             for p in locationRes:
                 proportion = 0.0
@@ -298,7 +298,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             GROUP BY R.restaurantID
                             ORDER BY count(F.foodID) desc
                         '''.format(cuisine = cuisine)
-            cuisineRes = FoodItems.objects.raw(querycuisine)
+            cuisineRes = Restaurants.objects.raw(querycuisine)
             total_food = 0
             for p in cuisineRes:
                 total_food = total_food + p.foodCount
@@ -316,7 +316,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             GROUP BY R.restaurantId
                             ORDER BY count(F.foodID) desc
                         '''.format(vegetarian = vegetarian)
-            vegRes = FoodItems.objects.raw(queryVeg)
+            vegRes = Restaurants.objects.raw(queryVeg)
             total_food = 0
             for p in vegRes:
                 total_food = total_food + p.foodCount
@@ -334,7 +334,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                                 GROUP BY R.restaurantId
                                 ORDER BY count(F.foodID) desc
                             '''.format(allergy1 = allergy1, allergy2 = allergy2)
-                allergyRes = vegRes = FoodItems.objects.raw(queryAllergy)
+                allergyRes = Restaurants.objects.raw(queryAllergy)
                 total_food = 0
                 for p in allergyRes:
                     total_food = total_food + p.foodCount
@@ -351,7 +351,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                                 GROUP BY R.restaurantId
                                 ORDER BY count(F.foodID) desc
                             '''.format(allergy1 = allergy1)
-                allergyRes = FoodItems.objects.raw(queryAllergy)
+                allergyRes = Restaurants.objects.raw(queryAllergy)
                 total_food = 0
                 for p in allergyRes:
                     total_food = total_food + p.foodCount
