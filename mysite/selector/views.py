@@ -369,7 +369,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             GROUP BY R.restaurantId
                             ORDER BY avg(R.ratingNum) desc
                         '''.format(email1 = email1)
-            ratingRes = Ratings.objects.raw(queryRating)   
+            ratingRes = Restaurants.objects.raw(queryRating)   
             for p in ratingRes:
                 proportion = p.avgRating / 30
                 proportion = proportion * weights[4]
