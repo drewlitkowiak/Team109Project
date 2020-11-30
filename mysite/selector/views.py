@@ -153,7 +153,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             currUser = NeoUser.nodes.get_or_none(email=email1)
             if currUser == None:
                 currUser = NeoUser(email = email1).save()
-            attr1Neo = NeoAttributes.nodes.get_or_none(attribute=attr1)
+            attr1Neo = NeoAttributes.nodes.get_or_none(attribute = attr1)
             if attr1Neo == None:
                 attr1Neo = NeoAttributes(attribute = attr1).save()
             attr2Neo = NeoAttributes.nodes.get_or_none(attribute=attr2)
@@ -167,7 +167,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
                 attr4Neo = NeoAttributes(attribute = attr4).save()
             attr5Neo = NeoAttributes.nodes.get_or_none(attribute=attr5)
             if attr5Neo == None:
-                attr5Neo = NeoAttributes(attribute = attr5Neo).save()
+                attr5Neo = NeoAttributes(attribute = attr5).save()
             fav_restNeo = NeoRestaurant.nodes.get_or_none(name = fav_rest)
             if fav_restNeo == None:
                 fav_restNeo = NeoRestaurant(name = fav_rest).save()
