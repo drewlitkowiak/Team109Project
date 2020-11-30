@@ -383,7 +383,8 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             FROM Restaurants AS R
                             WHERE restaurantName = '{freq_rest_name}'
                         '''.format(freq_rest_name = freq_rest_name)  
-            freqRes = Restaurants.objects.raw(queryFreq)                      
+            freqRes = Restaurants.objects.raw(queryFreq)  
+            print(freqRes)                    
             for p in freqRes:
                 proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
@@ -396,6 +397,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                             WHERE foodName = '{fav_food_name}'
                         '''.format(fav_food_name = fav_food_name)  
             favfoodRes =  Restaurants.objects.raw(queryFavFood)
+            print(favfoodRes)
             for p in favfoodRes:
                 proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
