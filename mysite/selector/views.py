@@ -253,14 +253,14 @@ def rec(request):       # form for the recommender, advanced function goes here 
             resrestids = Restaurants.objects.raw(query2)
             metric = {}              # a dictionary that will be edited with the metrics of each restaurant
             for p in resrestids:
-                toadd = {p.restaurantID: 0}
+                toadd = {p.restaurantId: 0}
                 metric.update(toadd)
 
             # query for price range 
             queryprice = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
                             FROM FoodItems AS F NATURAL JOIN Restaurants AS R
                             WHERE price <= '{upperprice}' and price >= '{lowerprice}'
-                            GROUP BY R.restaurantID
+                            GROUP BY R.restaurantId
                             ORDER BY count(F.foodID) desc
                         '''.format(upperprice = upperprice, lowerprice = lowerprice)
             priceRes = FoodItems.objects.raw(queryprice)
@@ -270,9 +270,9 @@ def rec(request):       # form for the recommender, advanced function goes here 
             for p in priceRes:
                 proportion = p.foodCount / total_food
                 proportion = proportion * weights[0]
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})
+                metric.update({p.restaurantId:new_metric})
 
             # query for location
             querylocation = '''SELECT *
@@ -287,9 +287,9 @@ def rec(request):       # form for the recommender, advanced function goes here 
                     proportion = 0.3 * weights[1]
                 else:
                     proportion = 0.3 * 0.4
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})
+                metric.update({p.restaurantId:new_metric})
             
             #query for cuisine 
             querycuisine = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
@@ -305,15 +305,15 @@ def rec(request):       # form for the recommender, advanced function goes here 
             for p in priceRes:
                 proportion = p.foodCount / total_food
                 proportion = proportion * weights[2]
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})
+                metric.update({p.restaurantId:new_metric})
 
             #query for allergies and vegetarian 
             queryVeg = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
                             FROM FoodItems AS F NATURAL JOIN Restaurants AS R
                             WHERE vegetarian = '{vegetarian}' 
-                            GROUP BY R.restaurantID
+                            GROUP BY R.restaurantId
                             ORDER BY count(F.foodID) desc
                         '''.format(vegetarian = vegetarian)
             vegRes = FoodItems.objects.raw(queryVeg)
@@ -323,15 +323,15 @@ def rec(request):       # form for the recommender, advanced function goes here 
             for p in vegRes:
                 proportion = p.foodCount / total_food
                 proportion = proportion * weights[3]
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})
+                metric.update({p.restaurantId:new_metric})
             
             if allergy1 !='No' and allergy2 != 'No':
                 queryAllergy = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
                                 FROM FoodItems AS F NATURAL JOIN Restaurants AS R
                                 WHERE allergies1 <> '{allergy1}' and allergies2 <> '{allergy1}' and allergies1 <> '{allergy2}' and allergies2 <> '{allergy2}'
-                                GROUP BY R.restaurantID
+                                GROUP BY R.restaurantId
                                 ORDER BY count(F.foodID) desc
                             '''.format(allergy1 = allergy1, allergy2 = allergy2)
                 allergyRes = vegRes = FoodItems.objects.raw(queryAllergy)
@@ -341,14 +341,14 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 for p in allergyRes:
                     proportion = p.foodCount / total_food
                     proportion = proportion * weights[3]
-                    old_metric = metric.get(p.restaurantID)
+                    old_metric = metric.get(p.restaurantId)
                     new_metric = proportion + old_metric
-                    metric.update({p.restaurantID:new_metric})
+                    metric.update({p.restaurantId:new_metric})
             elif allergy1 != 'No' and allergy2 == 'No':
                 queryAllergy = '''SELECT R.restaurantId, count(F.foodID) as foodCount 
                                 FROM FoodItems AS F NATURAL JOIN Restaurants AS R
                                 WHERE allergies1 <> '{allergy1}' and allergies2 <> '{allergy1}' 
-                                GROUP BY R.restaurantID
+                                GROUP BY R.restaurantId
                                 ORDER BY count(F.foodID) desc
                             '''.format(allergy1 = allergy1)
                 allergyRes = FoodItems.objects.raw(queryAllergy)
@@ -358,24 +358,24 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 for p in allergyRes:
                     proportion = p.foodCount / total_food
                     proportion = proportion * weights[3]
-                    old_metric = metric.get(p.restaurantID)
+                    old_metric = metric.get(p.restaurantId)
                     new_metric = proportion + old_metric
-                    metric.update({p.restaurantID:new_metric})  
+                    metric.update({p.restaurantId:new_metric})  
 
             # queries for something familiar, first ratings 
             queryRating = '''SELECT R.restaurantId, avg(R.ratingNum) as avgRating 
                             FROM Ratings AS R NATURAL JOIN Users AS U
                             WHERE U.userEmail = '{email1}'
-                            GROUP BY R.restaurantID
+                            GROUP BY R.restaurantId
                             ORDER BY avg(R.ratingNum) desc
                         '''.format(email1 = email1)
             ratingRes = Ratings.objects.raw(queryRating)   
             for p in ratingRes:
                 proportion = p.avgRating / 30
                 proportion = proportion * weights[4]
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})         
+                metric.update({p.restaurantId:new_metric})         
 
             # query for most frequented restaurant  
             queryFreq = '''SELECT *
@@ -385,9 +385,9 @@ def rec(request):       # form for the recommender, advanced function goes here 
             freqRes = Restaurants.objects.raw(queryFreq)                      
             for p in freqRes:
                 proportion = 0.1 * weights[4]
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})
+                metric.update({p.restaurantId:new_metric})
 
             #query for fav food
             queryFavFood = '''SELECT *
@@ -397,50 +397,50 @@ def rec(request):       # form for the recommender, advanced function goes here 
             favfoodRes =  Restaurants.objects.raw(queryFavFood)
             for p in favfoodRes:
                 proportion = 0.1 * weights[4]
-                old_metric = metric.get(p.restaurantID)
+                old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                metric.update({p.restaurantID:new_metric})
+                metric.update({p.restaurantId:new_metric})
             
             #now choose the top 3 restaurants out of the dictionary
             max_metric = 0
             best_rest = 0
             for p in resrestids:
-                curr_metric =  metric.get(p.restaurantID)
+                curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
-                    best_rest = p.restaurantID
+                    best_rest = p.restaurantId
             metric.update({best_rest:0})
 
             max_metric = 0
             second_rest = 0
             for p in resrestids:
-                curr_metric =  metric.get(p.restaurantID)
+                curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
-                    second_rest = p.restaurantID
+                    second_rest = p.restaurantId
             metric.update({second_rest:0})
 
             max_metric = 0
             third_rest = 0
             for p in resrestids:
-                curr_metric =  metric.get(p.restaurantID)
+                curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
-                    third_rest = p.restaurantID
+                    third_rest = p.restaurantId
             metric.update({third_rest:0})
 
             queryBest = '''SELECT *
                             FROM Restaurants AS R
-                            WHERE restaurantID = '{best_rest}'
+                            WHERE restaurantId = '{best_rest}'
                         '''.format(best_rest = best_rest)  
             bestRes = Restaurants.objects.raw(queryBest)  
 
             querySecond = '''SELECT *
                             FROM Restaurants AS R
-                            WHERE restaurantID = '{second_rest}'
+                            WHERE restaurantId = '{second_rest}'
                         '''.format(second_rest = second_rest)  
             secondBestRes = Restaurants.objects.raw(querySecond) 
 
             queryThird = '''SELECT *
                             FROM Restaurants AS R
-                            WHERE restaurantID = '{third_rest}'
+                            WHERE restaurantId = '{third_rest}'
                         '''.format(third_rest = third_rest)  
             thirdBestRes = Restaurants.objects.raw(queryThird)    
             
