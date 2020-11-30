@@ -385,7 +385,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(freq_rest_name = freq_rest_name)  
             freqRes = Restaurants.objects.raw(queryFreq)                      
             for p in freqRes:
-                proportion = 0.1 * weights[4]
+                proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
                 metric.update({p.restaurantId:new_metric})
@@ -397,7 +397,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(fav_food_name = fav_food_name)  
             favfoodRes =  Restaurants.objects.raw(queryFavFood)
             for p in favfoodRes:
-                proportion = 0.1 * weights[4]
+                proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
                 metric.update({p.restaurantId:new_metric})
