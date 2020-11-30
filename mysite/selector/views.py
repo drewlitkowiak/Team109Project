@@ -229,18 +229,18 @@ def rec(request):       # form for the recommender, advanced function goes here 
             fav_food = user_inNeo.likedFoods[0]
 
             most_idx = indecies.get(most_import.attribute)
-            weights[most_idx] = 0.4
+            weights[most_idx] = 1.0 #0.4
             second_idx = indecies.get(second_import.attribute)
-            weights[second_idx] = 0.275
+            weights[second_idx] = 0.0 #0.275
             third_idx = indecies.get(third_import.attribute)
-            weights[third_idx] = 0.175
+            weights[third_idx] = 0.0 #0.175
             fourth_idx = indecies.get(fourth_import.attribute)
-            weights[fourth_idx] = 0.075
+            weights[fourth_idx] = 0.0 #0.075
             fifth_idx = indecies.get(fifth_import.attribute)
-            weights[fifth_idx] = 0.075
+            weights[fifth_idx] = 0.0 #0.075
             freq_rest_name = frequent_rest.name
             fav_food_name = fav_food.name
-
+            print(most_idx, second_idx, third_idx, fourth_idx, fifth_idx)
             query1 = '''SELECT *
                          FROM Users
                          WHERE userEmail = '{email}'
@@ -267,6 +267,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
             total_food = 0   
             for p in priceRes:
                 total_food = total_food + p.foodCount
+                
             for p in priceRes:
                 proportion = p.foodCount / total_food
                 proportion = proportion * weights[0]
@@ -408,6 +409,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     best_rest = p.restaurantId
+
             metric.update({best_rest:0})
 
             max_metric = 0
@@ -416,6 +418,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     second_rest = p.restaurantId
+
             metric.update({second_rest:0})
 
             max_metric = 0
