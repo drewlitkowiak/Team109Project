@@ -148,7 +148,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             attr5 = updateprefform.cleaned_data['fifthImportant']
             fav_rest = updateprefform.cleaned_data['favoriteRestaurant']
             liked_food = updateprefform.cleaned_data['likedFood']
-            print(email1, attr1, attr2, attr3, attr4, attr5, attr6, fav_rest, liked_food)
+            print(email1, attr1, attr2, attr3, attr4, attr5, fav_rest, liked_food)
             # seaches the neo4j database for the user node and the nodes for all the attributes, creates them if they do not exist
             currUser = NeoUser.nodes.get_or_none(email=email1)
             if currUser == None:
