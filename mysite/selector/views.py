@@ -205,7 +205,7 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
 def rec(request):       # form for the recommender, advanced function goes here as well, needs to connect to Neo4j and sql db's
     if request.method == 'POST':
         recomenderform = RecomenderForm(request.POST)
-        if recomenderform.is_valid:
+        if recomenderform.is_valid():
             email1 = recomenderform.cleaned_data['email']
             weather = recomenderform.cleaned_data['weather']
             lowerprice = recomenderform.cleaned_data['lowerprice']
