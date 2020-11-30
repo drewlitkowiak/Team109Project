@@ -385,10 +385,11 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(freq_rest_name = freq_rest_name)  
             freqRes = Restaurants.objects.raw(queryFreq)                     
             for p in freqRes:
-                print(p.restaurantName)
+                print(p.restaurantId)
                 proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
+                print(new_metric)
                 metric.update({p.restaurantId:new_metric})
 
             #query for fav food
@@ -398,10 +399,11 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(fav_food_name = fav_food_name)  
             favfoodRes = Restaurants.objects.raw(queryFavFood)
             for p in favfoodRes:
-                print(p.restaurantName)
+                print(p.restaurantId)
                 proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
+                print(new_metric)
                 metric.update({p.restaurantId:new_metric})
             #now choose the top 3 restaurants out of the dictionary
             max_metric = 0.0
@@ -410,6 +412,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     best_rest = p.restaurantId
+                    max_metric = curr_metric
 
             metric.update({best_rest:0.0})
             print (max_metric)
@@ -420,6 +423,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     second_rest = p.restaurantId
+                    max_metric = curr_metric
 
             metric.update({second_rest:0.0})
             print (max_metric)
@@ -429,6 +433,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     third_rest = p.restaurantId
+                    max_metric = curr_metric
             metric.update({third_rest:0.0})
             print(max_metric)
             queryBest = '''SELECT *
