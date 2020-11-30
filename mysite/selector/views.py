@@ -371,7 +371,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(email1 = email1)
             ratingRes = Restaurants.objects.raw(queryRating)   
             for p in ratingRes:
-                proportion = p.avgRating / 30
+                proportion = float(p.avgRating / 30)
                 proportion = proportion * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
