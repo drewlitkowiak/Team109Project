@@ -229,15 +229,15 @@ def rec(request):       # form for the recommender, advanced function goes here 
             fav_food = user_inNeo.likedFoods[0]
 
             most_idx = indecies.get(most_import.attribute)
-            weights[most_idx] = 1.0 #0.4
+            weights[most_idx] = 0.4
             second_idx = indecies.get(second_import.attribute)
-            weights[second_idx] = 0.0 #0.275
+            weights[second_idx] = 0.275
             third_idx = indecies.get(third_import.attribute)
-            weights[third_idx] = 0.0 #0.175
+            weights[third_idx] = 0.175
             fourth_idx = indecies.get(fourth_import.attribute)
-            weights[fourth_idx] = 0.0 #0.075
+            weights[fourth_idx] = 0.075
             fifth_idx = indecies.get(fifth_import.attribute)
-            weights[fifth_idx] = 0.0 #0.075
+            weights[fifth_idx] = 0.075
             freq_rest_name = frequent_rest.name
             fav_food_name = fav_food.name
             print(most_idx, second_idx, third_idx, fourth_idx, fifth_idx)
@@ -385,11 +385,9 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(freq_rest_name = freq_rest_name)  
             freqRes = Restaurants.objects.raw(queryFreq)                     
             for p in freqRes:
-                print(p.restaurantId)
                 proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                print(new_metric)
                 metric.update({p.restaurantId:new_metric})
 
             #query for fav food
@@ -399,11 +397,9 @@ def rec(request):       # form for the recommender, advanced function goes here 
                         '''.format(fav_food_name = fav_food_name)  
             favfoodRes = Restaurants.objects.raw(queryFavFood)
             for p in favfoodRes:
-                print(p.restaurantId)
                 proportion = 0.2 * weights[4]
                 old_metric = metric.get(p.restaurantId)
                 new_metric = proportion + old_metric
-                print(new_metric)
                 metric.update({p.restaurantId:new_metric})
             #now choose the top 3 restaurants out of the dictionary
             max_metric = 0.0
@@ -413,9 +409,8 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 if curr_metric > max_metric:
                     best_rest = p.restaurantId
                     max_metric = curr_metric
-
+            print(max_metric)
             metric.update({best_rest:0.0})
-            print (max_metric)
 
             max_metric = 0.0
             second_rest = 0
@@ -424,9 +419,8 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 if curr_metric > max_metric:
                     second_rest = p.restaurantId
                     max_metric = curr_metric
-
+            print(max_metric)
             metric.update({second_rest:0.0})
-            print (max_metric)
             max_metric = 0.0
             third_rest = 0
             for p in resrestids:
@@ -434,8 +428,8 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 if curr_metric > max_metric:
                     third_rest = p.restaurantId
                     max_metric = curr_metric
-            metric.update({third_rest:0.0})
             print(max_metric)
+            metric.update({third_rest:0.0})
             queryBest = '''SELECT *
                             FROM Restaurants AS R
                             WHERE restaurantId = '{best_rest}'
