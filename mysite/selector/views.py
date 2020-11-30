@@ -153,25 +153,25 @@ def prefs(request):     # made a new page and view fucntion for updating the Neo
             currUser = NeoUser.nodes.get_or_none(email=email1)
             if currUser == None:
                 currUser = NeoUser(email = email1).save()
-            attr1Neo = NeoAttributes.get_or_none(attribute=attr1)
+            attr1Neo = NeoAttributes.nodes.get_or_none(attribute=attr1)
             if attr1Neo == None:
                 attr1Neo = NeoAttributes(attribute = attr1).save
-            attr2Neo = NeoAttributes.get_or_none(attribute=attr2)
+            attr2Neo = NeoAttributes.nodes.get_or_none(attribute=attr2)
             if attr2Neo == None:
                 attr2Neo = NeoAttributes(attribute = attr2).save
-            attr3Neo = NeoAttributes.get_or_none(attribute=attr3)
+            attr3Neo = NeoAttributes.nodes.get_or_none(attribute=attr3)
             if attr3Neo == None:
                 attr3Neo = NeoAttributes(attribute = attr3).save
-            attr4Neo = NeoAttributes.get_or_none(attribute=attr4)
+            attr4Neo = NeoAttributes.nodes.get_or_none(attribute=attr4)
             if attr4Neo == None:
                 attr4Neo = NeoAttributes(attribute = attr4).save
-            attr5Neo = NeoAttributes.get_or_none(attribute=attr5)
+            attr5Neo = NeoAttributes.nodes.get_or_none(attribute=attr5)
             if attr5Neo == None:
                 attr5Neo = NeoAttributes(attribute = attr5Neo).save
-            fav_restNeo = NeoRestaurant.get_or_none(name = fav_rest)
+            fav_restNeo = NeoRestaurant.nodes.get_or_none(name = fav_rest)
             if fav_restNeo == None:
                 fav_restNeo = NeoRestaurant(name = fav_rest).save()
-            liked_foodNeo = NeoFoodItems.get_or_none(name = liked_food)
+            liked_foodNeo = NeoFoodItems.nodes.get_or_none(name = liked_food)
             if liked_foodNeo == None:
                 liked_foodNeo = NeoFoodItems(name = liked_food).save()
             # first disconnect all relationships from the user node.
