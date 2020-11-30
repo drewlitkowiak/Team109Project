@@ -253,7 +253,7 @@ def rec(request):       # form for the recommender, advanced function goes here 
             resrestids = Restaurants.objects.raw(query2)
             metric = {}              # a dictionary that will be edited with the metrics of each restaurant
             for p in resrestids:
-                toadd = {p.restaurantId: 0}
+                toadd = {p.restaurantId: 0.0}
                 metric.update(toadd)
 
             # query for price range 
@@ -403,32 +403,32 @@ def rec(request):       # form for the recommender, advanced function goes here 
                 metric.update({p.restaurantId:new_metric})
             print(freq_rest_name, fav_food_name)
             #now choose the top 3 restaurants out of the dictionary
-            max_metric = 0
+            max_metric = 0.0
             best_rest = 0
             for p in resrestids:
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     best_rest = p.restaurantId
 
-            metric.update({best_rest:0})
+            metric.update({best_rest:0.0})
             print (max_metric)
 
-            max_metric = 0
+            max_metric = 0.0
             second_rest = 0
             for p in resrestids:
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     second_rest = p.restaurantId
 
-            metric.update({second_rest:0})
+            metric.update({second_rest:0.0})
             print (max_metric)
-            max_metric = 0
+            max_metric = 0.0
             third_rest = 0
             for p in resrestids:
                 curr_metric =  metric.get(p.restaurantId)
                 if curr_metric > max_metric:
                     third_rest = p.restaurantId
-            metric.update({third_rest:0})
+            metric.update({third_rest:0.0})
             print(max_metric)
             queryBest = '''SELECT *
                             FROM Restaurants AS R
