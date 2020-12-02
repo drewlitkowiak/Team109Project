@@ -89,7 +89,7 @@ def edit(request):
                 with connection.cursor() as cursor:
                     cursor.execute('''insert into Restaurants(restaurantName, restaurantAddress, restaurantZip) 
                                       values ('{restaurant_name}', '{restaurant_address}', '{restaurant_zip}')'''.format(restaurant_name=restaurant_name, restaurant_address=restaurant_address, restaurant_zip=restaurant_zip))
-                print(restaurant_name, restaurant_address, restaurant_zip)
+
         elif "deleterest" in request.POST:
             deleterestform = DeleteRestaurantForm(request.POST)
             if deleterestform.is_valid():
@@ -97,7 +97,6 @@ def edit(request):
                 rest_addr = deleterestform.cleaned_data['restaurantAddress']
                 with connection.cursor() as cursor:
                     cursor.execute("delete from Restaurants where restaurantName = '{rest_name}' and restaurantAddress = '{rest_addr}' ".format(rest_name=rest_name, rest_addr = rest_addr))
-                print(food_name)
 
         elif "insertrat" in request.POST:     # insert ratings
             insertratform = InsertRatingsForm(request.POST)
